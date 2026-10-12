@@ -1,0 +1,10 @@
+.env
+bin/
+models/
+runtime/
+*.log
+*.pid
+*.wav
+.DS_Store
+coverage.out
+PLAN.md

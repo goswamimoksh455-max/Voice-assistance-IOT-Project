@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STT Evaluation</title><link rel="stylesheet" href="/web/style.css"><link rel="stylesheet" href="/dev/dev.css"></head>
+<body><main class="wide"><header><div><p class="eyebrow">DEVELOPMENT ONLY · LOCALHOST</p><h1>STT Evaluation</h1></div><span id="connection" class="pill">Connecting…</span></header>
+<section class="card"><p class="muted">Each recording is transcribed twice: <strong>Direct</strong> sends the dataset WAV straight to Whisper; <strong>Application</strong> replays it through the production AudioWorklet capture, WebSocket framing, Go resampling and Whisper request. STT-only mode never calls Gemini or Piper.</p>
+<div class="dev-controls">
+<label>Dataset<select id="dataset"><option value="">All</option><option>FLEURS</option><option>OpenSLR-104</option><option value="local">Local recordings</option></select></label>
+<label>Language<select id="language"><option value="">All</option><option value="en">English</option><option value="hi">Hindi</option><option value="hinglish">Hinglish</option></select></label>
+<label>Whisper language<select id="whisperLanguage"><option value="">Fixture language</option><option value="auto">auto</option><option value="en">en</option><option value="hi">hi</option></select></label>
+<label>Samples<input id="count" type="number" min="1" value="50"></label>
+<label>AudioContext rate<select id="rate"><option value="">Browser default</option><option>16000</option><option>44100</option><option>48000</option></select></label>
+<label>Mode<select id="mode"><option value="stt">STT only</option><option value="full">Full pipeline smoke (max 3, uses Gemini)</option></select></label>
+</div>
+<div class="dev-buttons"><button id="runAll" class="talk">Run all</button><button id="runOne" class="secondary">Run selected</button><button id="stop" class="ghost" disabled>Stop batch</button><button id="save" class="ghost">Save report</button><button id="json" class="ghost">Download JSON</button><button id="csv" class="ghost">Download CSV</button></div>
+<p id="state" class="muted">Loading fixtures…</p></section>
+<section class="card"><h2>Summary</h2><div id="summary" class="summary muted">No results yet.</div></section>
+<section class="card"><h2>Recordings</h2><div class="table-wrap"><table id="results"><thead><tr><th>Test ID</th><th>Lang</th><th>Source</th><th>Reference</th><th>Direct Whisper</th><th>Application Whisper</th><th>Direct WER</th><th>App WER</th><th>Input → Whisper rate</th><th>Duration orig / processed</th><th>Latency direct / app</th><th>Fidelity</th><th>Status</th></tr></thead><tbody></tbody></table></div></section>
+<section id="detail" class="card" hidden><h2>Selected recording</h2><pre id="detailText"></pre><div class="debug-audio"><label>Original dataset recording<audio id="originalAudio" controls></audio></label><label>Audio submitted to Whisper (application path)<audio id="whisperAudio" controls></audio></label></div></section>
+<p class="privacy">Public datasets: Google FLEURS (CC BY 4.0) and OpenSLR 104 (CC BY-SA 4.0). Fixtures are cached in runtime/fixtures and never committed.</p>
+</main><script src="/dev/dev.js" type="module"></script></body></html>
